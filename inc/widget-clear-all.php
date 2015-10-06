@@ -21,7 +21,20 @@ class Woo_Clear_All_Widget extends WP_Widget {
 
 		echo $before_widget;
 
-		if ( isset( $_GET['filter_connections'] ) ){
+		$get_array = $_GET;
+		$exists = false;
+		$matches = array();
+
+		foreach( $get_array as $key => $value ){
+			if ( false === $exists ){
+				preg_match( '/^filter/', $key, $matches );
+				if ( ! empty( $matches ) ){
+					$exists = true;
+				}
+			}
+		}
+
+		if ( true === $exists ){
 			$filterreset = $_SERVER['REQUEST_URI'];
 			$filterreset = strtok($filterreset, '?');
 			echo '<ul>';
